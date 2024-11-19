@@ -1,3 +1,6 @@
+"""
+Generates a .npy file with the sizes of PSFs (width at 1/2 max) versus the circular aperture radius
+"""
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt

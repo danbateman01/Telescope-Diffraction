@@ -1,18 +1,21 @@
+"""
+Generates and saves the PSF of a circular aperature
+"""
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
 import PSF as psf
+import PSF_plotter
 
 #Simple Circular aperature test
 
 #Circular pupil radius
-r = 10
+r = 20
 
 #Grid size
 N = 500
-arr = np.zeros((N, N))
 
-psf.generate_circle(arr, r)
+arr = psf.generate_circular_pupil(N, r)
 
 #Plot Pupil function
 plt.imshow(arr)
@@ -21,6 +24,7 @@ plt.show()
 #Get PSF
 PSF = psf.get_PSF(arr)
 
-#Plot PSF
-plt.imshow(PSF)
-plt.show()
+np.save('Circular_PSF.npy', PSF)
+
+PSF_plotter.plot_2D(PSF)
+PSF_plotter.plot_radially(PSF)

@@ -1,20 +1,28 @@
+"""
+Generates and saves the PSF of a cassegrain aperture
+"""
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
 import PSF as psf
+import PSF_plotter
 
-N = 2000
-arr = np.zeros((N, N))
+# Grid Size
+N = 500
 
-psf.generate_circle(arr, 50)
-psf.generate_circle(arr, 10, 0)
-psf.add_struts(arr, 6)
+inner_radius = 20
+outer_radius = 50
+strut_width  = 5
 
+arr = psf.generate_cassegrain_pupil(N, outer_radius, inner_radius, strut_width)
+
+# Plot Aperature
 plt.imshow(arr)
 plt.show()
+
 
 PSF = psf.get_PSF(arr)
 np.save('Cassegrain_PSF.npy', PSF)
 
-plt.imshow(PSF)
-plt.show()
+PSF_plotter.plot_2D(PSF)
+PSF_plotter.plot_radially(PSF)
