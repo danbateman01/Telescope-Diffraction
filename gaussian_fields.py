@@ -35,9 +35,10 @@ def gaussian_random_field(Pk = lambda k : k**-3.0 * np.exp(-k**2), size = 101):
     # Multipy the fft of the even random field by the grid of Pk(kx, ky)
     return np.fft.ifft2(noise * amplitude)
 
-for alpha in [-4.0, -3.0, -2.0]:
-    kc = 20
-    out = gaussian_random_field(Pk = lambda k: k**alpha * np.exp(-k**2/(kc**2)), size=255)
-    plt.figure()
-    plt.imshow(out.real, interpolation='none')
-    plt.show()
+if __name__ == '__main__':
+    for alpha in [-4.0, -3.0, -2.0]:
+        kc = 20
+        out = gaussian_random_field(Pk = lambda k: k**alpha * np.exp(-k**2/(kc**2)), size=255)
+        plt.figure()
+        plt.imshow(out.real, interpolation='none')
+        plt.show()
