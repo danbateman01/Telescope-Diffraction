@@ -13,18 +13,15 @@ def fftIndgen(n):
     b = [-i for i in b]
     return a + b
 
-def gaussian_random_field(kc, alpha, n, debug=False):
+def gaussian_random_field(Pk, params, n, debug=False):
     '''Generate a nxn (n must be even) random gaussian field with Pk'''
     size = 2*n+1
-
-    def Pk(k):
-        return k**alpha * np.exp(-k**2/(kc**2))
 
     # Handle case where kx =ky =0
     def Pk2(kx, ky):
         if kx == 0 and ky == 0:
             return 0.0
-        return np.sqrt(Pk(np.sqrt(kx**2 + ky**2)))
+        return np.sqrt(Pk(np.sqrt(kx**2 + ky**2), params))
 
     # Get fft of even random field size nxn
     initial = generate_even.gen_even_random(size)
@@ -55,10 +52,14 @@ def gaussian_random_field(kc, alpha, n, debug=False):
     return np.fft.ifft2(noise * amplitude)[:size//2, :size//2].real
 
 if __name__ == '__main__':
+    def Pk(k, params):
+        alpha = params[1]
+        kc = params[0]
+        return k**alpha * np.exp(-k**2/(kc**2))
+    
     for alpha in [-1.0, -2.0, -4.0]:
         kc = 20
-        out = gaussian_random_field(kc, alpha, 100)
-        print(np.max(out))
+        out = gaussian_random_field(Pk, [kc, alpha], 100)
         plt.figure()
         plt.imshow(out.real, interpolation='none')
         plt.show()

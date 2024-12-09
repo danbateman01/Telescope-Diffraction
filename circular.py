@@ -9,12 +9,12 @@ import PSF_plotter
 
 #Simple Circular aperature test
 
-def circular_PSF(r, N = 500, show=False):
+def circular_PSF(N, r, show=False):
     #Generate Pupil function
     arr = psf.generate_circular_pupil(N, r)
 
     #Get PSF
-    PSF = psf.get_PSF(arr)
+    PSF = psf.get_normalized_PSF(arr)
 
     if(show):
         #Plot Pupil function
@@ -26,14 +26,15 @@ def circular_PSF(r, N = 500, show=False):
         PSF_plotter.plot_radially(PSF)
 
     return PSF
+
 if __name__ == '__main__':
     #Grid size
-    N = 500
+    N = 2000
 
     #Circular pupil radius
-    r = 20
+    r = 100
 
-    PSF = circular_PSF(r, N, True)
+    PSF = circular_PSF(N, r, True)
 
     np.save('Circular_PSF.npy', PSF)
 

@@ -4,6 +4,12 @@ Module with functions for generating PSFs
 import numpy as np
 import scipy as sp
 
+def get_normalized_PSF(pupil):
+    return normalize(get_PSF(pupil))
+
+def normalize(arr):
+    return (arr-np.min(arr))/(np.max(arr)-np.min(arr))
+
 def generate_circle(arr, r, x=1):
     '''Generates a circle of x with radius r at the center of the array arr'''
     d = len(arr)//2 -r

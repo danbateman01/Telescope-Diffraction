@@ -7,22 +7,33 @@ import matplotlib.pyplot as plt
 import PSF as psf
 import PSF_plotter
 
-# Grid Size
-N = 500
 
-inner_radius = 20
-outer_radius = 50
-strut_width  = 5
+def cassegrain_PSF(N, r_outer, r_inner, strut_width = 0, show=False):
+    arr = psf.generate_cassegrain_pupil(N, r_outer, r_inner, strut_width)
+    PSF = psf.get_PSF(arr)
 
-arr = psf.generate_cassegrain_pupil(N, outer_radius, inner_radius, strut_width)
+    if show:
+        #Plot Pupil function
+        plt.imshow(arr)
+        plt.show()
 
-# Plot Aperature
-plt.imshow(arr)
-plt.show()
+        #Plot PSF
+        PSF_plotter.plot_2D(PSF)
+        PSF_plotter.plot_radially(PSF)
 
+    return PSF
 
-PSF = psf.get_PSF(arr)
-np.save('Cassegrain_PSF.npy', PSF)
+if __name__ == '__main__':
 
-PSF_plotter.plot_2D(PSF)
-PSF_plotter.plot_radially(PSF)
+    # Grid Size
+    N = 2000
+
+    # Pupil Parameters
+    r_inner = 50
+    r_outer = 100
+    strut_width  = 0
+
+    # Get and sace PSF
+    PSF = cassegrain_PSF(N, r_outer, r_inner, strut_width, True)
+    np.save('Cassegrain_PSF.npy', PSF)
+

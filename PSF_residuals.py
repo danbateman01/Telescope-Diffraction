@@ -9,26 +9,10 @@ def airy(x, r):
     D=r*2
     return np.nan_to_num((2*sp.special.j1(np.pi * D * x)/(np.pi * D * x))**2, nan=1)
 
-def getResidualsHorizontal(r, N):
-    PSF = np.fft.ifftshift(circular.circular_PSF(r, N))
+def getResidualsHorizontal(N, r):
+    PSF = np.fft.ifftshift(circular.circular_PSF(N, r))
     numeric = np.fft.fftshift(PSF[0])
     xs = np.fft.fftshift(np.fft.fftfreq(N))
-
-    numeric = numeric/(np.max(numeric))
-
-    analytic = airy(xs, r) * np.max(numeric)
-
-    return [xs, (numeric-analytic)**2]
-
-def getResidualsDiagonal(r, N):
-    PSF = circular.circular_PSF(r, N)
-    numeric = np.zeros(N)
-    for i in range(N):
-        numeric[i] = PSF[i][i]
-
-    numeric = numeric/np.max(numeric)
-        
-    xs = np.fft.fftshift(np.fft.fftfreq(N)) * np.sqrt(2)
 
     analytic = airy(xs, r)
 
@@ -37,7 +21,7 @@ def getResidualsDiagonal(r, N):
 if __name__ == "__main__":
     Ns = [1000, 2000, 5000, 10000]
     for N in Ns:
-        xs, res = getResidualsDiagonal(500, N)
+        xs, res = getResidualsHorizontal(N, 500)
         plt.plot(xs[N//2::], res[N//2::])
     plt.xscale('log')
     plt.legend(list(map(str, Ns)))
@@ -46,7 +30,7 @@ if __name__ == "__main__":
     rs = [100, 200, 500, 1000, 2000, 2500]
     avgs = []
     for r in rs:
-        xs, res = getResidualsHorizontal(r, 5000)
+        xs, res = getResidualsHorizontal(5000, r)
         avgs.append(np.average(res))
         plt.plot(xs, res)
     plt.yscale('log')
