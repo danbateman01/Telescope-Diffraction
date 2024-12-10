@@ -15,6 +15,8 @@ def cassegrain_PSF(N, r_outer, r_inner, strut_width = 0, show=False):
     if show:
         #Plot Pupil function
         plt.imshow(arr)
+        plt.xlabel('x (m)')
+        plt.ylabel('y (m)')
         plt.show()
 
         #Plot PSF
@@ -29,9 +31,9 @@ if __name__ == '__main__':
     N = 2000
 
     # Pupil Parameters
-    r_inner = 50
-    r_outer = 100
-    strut_width  = 0
+    r_inner = 100
+    r_outer = 200
+    strut_width  = 10
 
     # Get and sace PSF
     PSF = cassegrain_PSF(N, r_outer, r_inner, strut_width, True)

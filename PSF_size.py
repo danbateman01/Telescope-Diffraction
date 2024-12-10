@@ -15,7 +15,22 @@ def get_PSF_size(N, r):
     half_max = np.max(PSF)/2
     central = np.nonzero(PSF[N//2] > half_max)
     size = np.max(central) - np.min(central)
-    return size
+
+    return np.fft.fftfreq(N)[size]
+
+def get_1st_min(N, r):
+    arr = np.zeros((N,N))
+    psf.generate_circle(arr, r)
+    PSF = psf.get_normalized_PSF(arr)
+    radially = PSF[N//2][N//2::]
+    
+    last = 1
+    for i, v in enumerate(radially):
+        if last < v:
+            return i -1
+        last = v
+        
+    return N//2
 
 def Psize_vs_Psize(N, r_start, r_stop, r_step):
     '''Generates a .npy file containing the width of PSF for circular aperatures of various radii'''
@@ -26,4 +41,4 @@ def Psize_vs_Psize(N, r_start, r_stop, r_step):
     
     np.save('PSF_size.npy', [rs, ws])
 
-Psize_vs_Psize(5000, 10, 1000, 20)
+Psize_vs_Psize(2000, 10, 500, 20)

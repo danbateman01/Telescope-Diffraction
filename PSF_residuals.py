@@ -27,14 +27,17 @@ if __name__ == "__main__":
     plt.legend(list(map(str, Ns)))
     plt.show()
 
-    rs = [100, 200, 500, 1000, 2000, 2500]
+    rs = [100, 200, 500, 1000, 2000]
+    N = 5000
     avgs = []
     for r in rs:
-        xs, res = getResidualsHorizontal(5000, r)
+        xs, res = getResidualsHorizontal(N, r)
         avgs.append(np.average(res))
-        plt.plot(xs, res)
+        plt.plot(xs[N//2::], res[N//2::])
     plt.yscale('log')
-    plt.legend(list(map(str, rs)))
+    plt.legend(np.char.add('r =', list(map(str, rs))))
+    plt.xlabel(r'$\theta_x/\lambda$')
+    plt.ylabel(r'Squared Residuals (Intensity)$^2$')
     plt.show()
 
     plt.plot(rs, avgs)

@@ -27,20 +27,22 @@ def long_exposure(N, r, Pk, params, frames):
 
     PSF_plotter.plot_2D(total)
 
+
 if __name__ == '__main__':
-    N = 500
-    r = 20
+    N = 1000
+    r = 100
     kc = 100
     alpha = -0.1
+    params = [kc, alpha]
 
     def Pk(k, params):
-        alpha = params[1]
         kc = params[0]
+        alpha = params[1]
         return k**alpha * np.exp(-k**2/(kc**2))
     
-    arr = generate_circular_complex_pupil(N, r, Pk, [kc, alpha])
+    arr = generate_circular_complex_pupil(N, r, Pk, params)
     
     plt.imshow(arr.imag)
     plt.show()
-    PSF_plotter.plot_2D(generate_imperfect_PSF(N, r, Pk, [kc, alpha]))
-    #long_exposure(N, r, Pk, [kc, alpha], 100)
+    PSF_plotter.plot_2D(generate_imperfect_PSF(N, r, Pk, params))
+    #long_exposure(N, r, high_pass, kc, 100)

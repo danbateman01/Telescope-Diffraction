@@ -19,6 +19,8 @@ def circular_PSF(N, r, show=False):
     if(show):
         #Plot Pupil function
         plt.imshow(arr)
+        plt.xlabel('x')
+        plt.ylabel('y')
         plt.show()
 
         #Plot PSF

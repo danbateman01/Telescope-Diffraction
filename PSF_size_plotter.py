@@ -8,7 +8,12 @@ import matplotlib.pyplot as plt
 import PSF as psf
 
 arr = np.load('PSF_size.npy')
-plt.plot(arr[0], arr[1])
-plt.ylabel('PSF Width at 1/2 Max')
-plt.xlabel('Circular Pupil Radius')
+plt.scatter(arr[0], arr[1])
+
+plt.plot(arr[0], 1.029/(2*arr[0]))
+
+plt.legend(['Computational', 'Theoretical'])
+
+plt.ylabel(r'PSF Width at 1/2 Max ($ \theta / \lambda$)')
+plt.xlabel('Circular Pupil Radius (m)')
 plt.show()
