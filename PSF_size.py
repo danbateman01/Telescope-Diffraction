@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import PSF as psf
 
 def get_PSF_size(N, r):
-    '''Gets the width at half max of a PSF generated from a circular aperature with radius r centered on a NxN grid'''
+    '''Gets the width at half max of a PSF generated from a circular aperture with radius r centered on a NxN grid'''
     arr = np.zeros((N,N))
     psf.generate_circle(arr, r)
     PSF = psf.get_PSF(arr)
@@ -19,6 +19,7 @@ def get_PSF_size(N, r):
     return np.fft.fftfreq(N)[size]
 
 def get_1st_min(N, r):
+    '''Gets the location of the first minimum of a PSF with circular aperture of radius r centered on a NxN grid'''
     arr = np.zeros((N,N))
     psf.generate_circle(arr, r)
     PSF = psf.get_normalized_PSF(arr)
@@ -27,17 +28,17 @@ def get_1st_min(N, r):
     last = 1
     for i, v in enumerate(radially):
         if last < v:
-            return i -1
+            return np.fft.fftfreq(N)[i -1]
         last = v
         
-    return N//2
+    return np.fft.fftfrew(N)[N//2]
 
 def Psize_vs_Psize(N, r_start, r_stop, r_step):
-    '''Generates a .npy file containing the width of PSF for circular aperatures of various radii'''
+    '''Generates a .npy file containing the width of PSF for circular apertures of various radii'''
     rs = np.arange(r_start, r_stop, r_step)
     ws = []
     for r in rs:
-        ws.append(get_PSF_size(N, r))
+        ws.append(get_1st_min(N, r))
     
     np.save('PSF_size.npy', [rs, ws])
 

@@ -10,7 +10,7 @@ import PSF_plotter
 
 def cassegrain_PSF(N, r_outer, r_inner, strut_width = 0, show=False):
     arr = psf.generate_cassegrain_pupil(N, r_outer, r_inner, strut_width)
-    PSF = psf.get_PSF(arr)
+    PSF = psf.get_normalized_PSF(arr)
 
     if show:
         #Plot Pupil function
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     # Pupil Parameters
     r_inner = 100
     r_outer = 200
-    strut_width  = 10
+    strut_width  = 20
 
     # Get and sace PSF
     PSF = cassegrain_PSF(N, r_outer, r_inner, strut_width, True)

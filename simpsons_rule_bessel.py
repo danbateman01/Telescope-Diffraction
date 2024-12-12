@@ -25,16 +25,29 @@ def BesselJ1(x):
 
     return h/(3 * np.pi) * sum
 
-xs = np.linspace(0, 20, 1000)
-simpson_ys = BesselJ1(xs)
-scipy_ys = sp.special.j1(xs)
+def get_avg_residuals():
+    xs = np.linspace(0, 20, 1000)
+    simpson_ys = BesselJ1(xs)
+    scipy_ys = sp.special.j1(xs)
 
-fig, ax = plt.subplots(3, 1, sharex=True)
-plt.xlabel("x")
-ax[0].plot(xs, simpson_ys)
-ax[0].set_ylabel("Simpson's Rule J1")
-ax[1].plot(xs, scipy_ys)
-ax[1].set_ylabel("Scipy J1")
-ax[2].plot(xs, simpson_ys - scipy_ys)
-ax[2].set_ylabel("Difference")
-plt.show()
+    res = simpson_ys - scipy_ys
+
+    return np.average(np.abs(res))
+
+
+if __name__ == '__main__':
+    xs = np.linspace(0, 20, 1000)
+    simpson_ys = BesselJ1(xs)
+    scipy_ys = sp.special.j1(xs)
+
+    print('Average Residual Magnitude', get_avg_residuals())
+
+    fig, ax = plt.subplots(3, 1, sharex=True)
+    plt.xlabel("x")
+    ax[0].plot(xs, simpson_ys)
+    ax[0].set_ylabel("Simpson's Rule J1")
+    ax[1].plot(xs, scipy_ys)
+    ax[1].set_ylabel("Scipy J1")
+    ax[2].plot(xs, simpson_ys - scipy_ys)
+    ax[2].set_ylabel("Difference")
+    plt.show()

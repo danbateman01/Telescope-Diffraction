@@ -40,8 +40,9 @@ def plot_radially(arr, zoom = 1):
 
 if __name__ == '__main__':
     #Load file
-    fname = 'Cassegrain_PSF.npy'
+    #fname = 'Cassegrain_PSF.npy'
     #fname = 'Circular_PSF.npy'
+    fname = 'long_exposure.npy'
     arr = np.load(fname)
 
     plot_2D(arr, zoom=8)

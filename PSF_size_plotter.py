@@ -10,10 +10,11 @@ import PSF as psf
 arr = np.load('PSF_size.npy')
 plt.scatter(arr[0], arr[1])
 
-plt.plot(arr[0], 1.029/(2*arr[0]))
+rs = np.linspace(arr[0][0], arr[0][-1], 1000)
 
+plt.plot(rs, 1.22/(2*rs))
 plt.legend(['Computational', 'Theoretical'])
 
-plt.ylabel(r'PSF Width at 1/2 Max ($ \theta / \lambda$)')
+plt.ylabel(r'Location of 1st minimum ($ \theta / \lambda$)')
 plt.xlabel('Circular Pupil Radius (m)')
 plt.show()

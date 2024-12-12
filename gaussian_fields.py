@@ -57,9 +57,10 @@ if __name__ == '__main__':
         kc = params[0]
         return k**alpha * np.exp(-k**2/(kc**2))
     
-    for alpha in [-1.0, -2.0, -4.0]:
-        kc = 20
-        out = gaussian_random_field(Pk, [kc, alpha], 100)
+    for kc in [1, 10, 100]:
+        alpha = -1
+        out = gaussian_random_field(Pk, [kc, alpha], 1000)
+        #np.save(f'GF_a={alpha}.npy', out)
         plt.figure()
         plt.imshow(out.real, interpolation='none')
         plt.show()
