@@ -40,8 +40,8 @@ if __name__ == '__main__':
 
     # Parameters of complex pupil
     wavelength = 1
-    noise_strength = 5000 #5k for kc =1, 20 for kc=100
-    kc = 1
+    noise_strength = 20 #5k for kc =1, 20 for kc=100
+    kc = 100
     alpha = -1
     
     params = [kc, alpha]
