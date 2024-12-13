@@ -23,6 +23,7 @@ def plot_2D(arr, zoom = 1):
     plt.imshow(np.log(arr)[lower:upper, lower:upper], extent=[xmin, xmax, xmin, xmax])
     plt.xlabel(r'$\theta_x / \lambda$')
     plt.ylabel(r'$\theta_y / \lambda$')
+    plt.colorbar()
     plt.show()
 
 def plot_radially(arr, zoom = 1):

@@ -60,7 +60,8 @@ if __name__ == '__main__':
     for kc in [1, 10, 100]:
         alpha = -1
         out = gaussian_random_field(Pk, [kc, alpha], 1000)
-        
+
         plt.figure()
         plt.imshow(out.real, interpolation='none')
+        plt.colorbar()
         plt.show()
